@@ -1,5 +1,7 @@
 # Ambient Player by weather
 
+<img src="./img/ambient-player-design.png" width="200">
+
 ## 목표
 
 1. 날씨 `api`를 이용하여 날씨 정보를 받아온다.
