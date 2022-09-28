@@ -1,11 +1,14 @@
-import Player from "./Player";
+import Player from "./Components/Player";
 import bg from "./assets/humid-bg.png";
-import Weather from "./Weather";
+import Weather from "./Components/Weather";
+import useGeolocation from "./hooks/useGeolocation";
 
 function App() {
+  const location = useGeolocation();
+
   return (
     <div>
-      <Weather />
+      <Weather props={location} />
       <Player></Player>
       <img src={bg} alt="humid-bg" style={{ width: "500px" }} />
     </div>
