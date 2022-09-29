@@ -1,16 +1,25 @@
 import cloud from "../assets/music/cloud.mp3";
+import { useState, useRef } from "react";
 
 export function Player() {
-  const audio = new Audio(cloud);
-  const handleClick = (event) => {
-    audio.play();
+  const [nowPlaying, setNowPlaying] = useState(false);
+  const audioRef = useRef(new Audio(cloud));
+  const play = () => {
+    setNowPlaying(true);
+    audioRef.current.play();
+  };
+  const pause = () => {
+    setNowPlaying(false);
+    audioRef.current.pause();
   };
 
   return (
     <div>
       <input type="range"></input>
       <button>Change Ambient</button>
-      <input type="button" onClick={handleClick} value={"play"} />
+      <button onClick={nowPlaying ? pause : play}>
+        {nowPlaying ? "Pause" : "Play"}
+      </button>
     </div>
   );
 }
