@@ -21,7 +21,7 @@ const BackGroundImg = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -32,7 +32,13 @@ const InfoBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  margin-right: 20%;
   flex-direction: column;
+`;
+const PlayerBox = styled.div`
+  display: flex;
+  margin-right: 20%;
+  margin-top: 5%;
 `;
 
 function App() {
@@ -47,7 +53,9 @@ function App() {
             <Weather props={location} />
             <DateView />
           </InfoBox>
-          <Player />
+          <PlayerBox>
+            <Player />
+          </PlayerBox>
         </BackGroundImg>
       </Wrapper>
     </>

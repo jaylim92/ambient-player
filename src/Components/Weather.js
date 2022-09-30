@@ -1,6 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faWater,
+  faSun,
+  faCloud,
+  faCloudRain,
+  faCloudBolt,
+  faSnowflake,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,6 +47,16 @@ const Location = styled.span`
   }
 `;
 
+const Icon = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  .icon {
+    font-size: 50px;
+  }
+`;
+
 function Weather(location) {
   const [weather, setWeather] = useState("");
   const {
@@ -52,6 +71,15 @@ function Weather(location) {
   };
 
   const finalUrl = `${api.baseUrl}weather?lat=${api.lat}&lon=${api.lng}&units=metric&lang=kr&appid=${api.key}`;
+
+  const iconFa = {
+    Clear: faSun,
+    Clouds: faCloud,
+    Rain: faCloudRain,
+    Thunderstorm: faCloudBolt,
+    Snow: faSnowflake,
+    Mist: faWater,
+  };
 
   const getPosts = async () => {
     await axios
@@ -73,8 +101,7 @@ function Weather(location) {
     getPosts(location);
   }, [location]);
 
-  let iconUrl = "http://openweathermap.org/img/wn/" + weather.icon + ".png";
-
+  let iconCode = iconFa[`${weather.main}`];
   return (
     <Wrapper>
       <Degree>
@@ -87,7 +114,9 @@ function Weather(location) {
           {weather.main}
           <span>{weather.city}</span>
         </Location>
-        <img src={iconUrl} alt={weather.main} />
+        <Icon>
+          <FontAwesomeIcon icon={iconCode} className="icon" />
+        </Icon>
       </Info>
     </Wrapper>
   );
