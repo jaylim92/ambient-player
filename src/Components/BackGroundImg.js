@@ -7,37 +7,51 @@ import { Player } from "./Player";
 import useGeolocation from "../hooks/useGeolocation";
 
 const BackImg = styled.section`
-  display: grid;
+  display: flex;
   width: 100%;
   height: 100vh;
   justify-content: center;
   align-items: center;
   background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
   background-image: ${(props) => `url(${bg})`};
 `;
+
+const Wrapper = styled.div`
+  display: flex;
+  width: auto;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+`;
+
 const InfoBox = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding: 0 10%;
 `;
 const PlayerBox = styled.div`
   display: flex;
   margin-top: 5%;
   width: 500px;
+  padding: 0 10%;
 `;
 
 function BackGroundImg(weatherInfo) {
   const location = useGeolocation();
   return (
     <BackImg>
-      <InfoBox>
-        <Weather props={location} />
-        <DateView />
-      </InfoBox>
-      <PlayerBox>
-        <Player />
-      </PlayerBox>
+      <Wrapper>
+        <InfoBox>
+          <Weather props={location} />
+          <DateView />
+        </InfoBox>
+        <PlayerBox>
+          <Player />
+        </PlayerBox>
+      </Wrapper>
     </BackImg>
   );
 }

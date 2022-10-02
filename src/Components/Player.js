@@ -14,11 +14,9 @@ const PlayerControlBox = styled.section`
 
 const PlayerProgressBar = styled.input`
   display: flex;
-  width: 80%;
-  margin-left: 120px;
+  width: 100%;
   -webkit-appearance: none;
   ::-webkit-slider-runnable-track {
-    width: 100%;
     height: 3px;
     border-radius: 15px;
     cursor: pointer;
@@ -37,9 +35,7 @@ const PlayerProgressBar = styled.input`
 const PlayerControl = styled.span`
   display: flex;
   margin-top: 20px;
-  margin-right: 5px;
   justify-content: flex-end;
-  align-items: flex-end;
   span {
     display: flex;
     width: 50px;
