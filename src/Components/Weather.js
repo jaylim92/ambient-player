@@ -10,6 +10,8 @@ import {
   faCloudBolt,
   faSnowflake,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilState } from "recoil";
+import { weatherInfo } from "../atom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,6 +29,7 @@ const Degree = styled.span`
   font-size: 90px;
   font-weight: 700;
   letter-spacing: -5px;
+  margin-bottom: 20px;
 
   span:nth-child(1) {
     font-size: 70px;
@@ -58,7 +61,7 @@ const Icon = styled.span`
 `;
 
 function Weather(location) {
-  const [weather, setWeather] = useState("");
+  const [weather, setWeather] = useRecoilState(weatherInfo);
   const {
     props: { lat, lng },
   } = location;
@@ -79,6 +82,7 @@ function Weather(location) {
     Thunderstorm: faCloudBolt,
     Snow: faSnowflake,
     Mist: faWater,
+    Haze: faWater,
   };
 
   const getPosts = async () => {

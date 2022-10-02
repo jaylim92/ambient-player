@@ -6,25 +6,50 @@ import styled from "styled-components";
 
 const PlayerControlBox = styled.section`
   display: flex;
+  justify-content: center;
   flex-direction: column;
+  margin-top: 40px;
+  width: 100%;
+`;
+
+const PlayerProgressBar = styled.input`
+  display: flex;
+  width: 80%;
+  margin-left: 120px;
+  -webkit-appearance: none;
+  ::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 3px;
+    border-radius: 15px;
+    cursor: pointer;
+    background: white;
+  }
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    margin-top: -5px;
+    background-color: #27cd4e;
+  }
 `;
 
 const PlayerControl = styled.span`
   display: flex;
   margin-top: 20px;
   margin-right: 5px;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
   span {
     display: flex;
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
     margin: 10px;
     background-color: #27cd4e;
-    font-size: 45px;
+    font-size: 25px;
   }
 `;
 
@@ -41,29 +66,29 @@ export function Player() {
     setNowPlaying(false);
     audioRef.current.pause();
   };
-  console.log(audioRef);
 
   const changeRange = (event) => {
-    audioRef.current.currentTime = event.target.value;
-    changePlayerCurrentTime();
-  };
-
-  const changePlayerCurrentTime = () => {
-    rangeRef.current.style.setProperty(
-      "--seek-before-width",
-      `${(rangeRef.current.value / audioRef.duration) * 100}`
-    );
-    setCurrentTime(rangeRef.current.value);
+    const { value } = event.target;
+    console.log(value);
+    audioRef.current.currentTime = value;
+    console.log(rangeRef);
+    if (audioRef.current.currentTime === audioRef.current.duration - 1) {
+      setNowPlaying(false);
+      audioRef.current.currentTime = 0;
+      rangeRef.current.value = 0;
+    }
   };
 
   return (
     <PlayerControlBox>
-      <input
+      <PlayerProgressBar
         type="range"
         defaultValue={0}
+        min={0}
+        max={audioRef.current.duration - 1}
         ref={rangeRef}
         onChange={changeRange}
-      ></input>
+      ></PlayerProgressBar>
       <PlayerControl>
         <span>
           <FontAwesomeIcon icon={faShuffle} />
