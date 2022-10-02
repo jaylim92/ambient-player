@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ambient-player/static/css/main.0a292038.css",
+    "main.js": "/ambient-player/static/js/main.1ba29289.js",
+    "static/media/cloud.mp3": "/ambient-player/static/media/cloud.63c54da2ce62bc2b864a.mp3",
+    "static/media/humid-bg.png": "/ambient-player/static/media/humid-bg.15bb5c6a6a1482383cc7.png",
+    "index.html": "/ambient-player/index.html",
+    "main.0a292038.css.map": "/ambient-player/static/css/main.0a292038.css.map",
+    "main.1ba29289.js.map": "/ambient-player/static/js/main.1ba29289.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0a292038.css",
+    "static/js/main.1ba29289.js"
+  ]
+}
