@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,8 +8,10 @@ import {
   faCloudBolt,
   faSnowflake,
 } from "@fortawesome/free-solid-svg-icons";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { weatherInfo } from "../atom";
+import { useQuery } from "react-query";
+import { getWeatherData } from "../api";
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,21 +60,9 @@ const Icon = styled.span`
   }
 `;
 
-function Weather(location) {
-  const [weather, setWeather] = useRecoilState(weatherInfo);
-  const {
-    props: { lat, lng },
-  } = location;
-
-  const api = {
-    key: "542d7ac41806d60bd3788cededf7a96c",
-    baseUrl: "https://api.openweathermap.org/data/2.5/",
-    lat,
-    lng,
-  };
-
-  const finalUrl = `${api.baseUrl}weather?lat=${api.lat}&lon=${api.lng}&units=metric&lang=kr&appid=${api.key}`;
-
+function Weather() {
+  const { isLoading, data } = useQuery("weather", getWeatherData);
+  const setWeatherState = useSetRecoilState(weatherInfo);
   const iconFa = {
     Clear: faSun,
     Clouds: faCloud,
@@ -84,45 +72,34 @@ function Weather(location) {
     Mist: faWater,
     Haze: faWater,
   };
+  setWeatherState(data?.weather[0]?.main);
 
-  const getPosts = async () => {
-    await axios
-      .get(finalUrl)
-      .then((res) => {
-        const data = res.data;
-        setWeather({
-          id: data.weather[0],
-          temperature: data.main.temp,
-          main: data.weather[0].main,
-          city: data.name,
-          icon: data.weather[0].icon,
-        });
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getPosts(location);
-  }, [location]);
-
-  let iconCode = iconFa[`${weather.main}`];
   return (
-    <Wrapper>
-      <Degree>
-        {Math.floor(weather.temperature)}
-        <span> &deg;</span>
-        <span>C</span>
-      </Degree>
-      <Info>
-        <Location>
-          {weather.main}
-          <span>{weather.city}</span>
-        </Location>
-        <Icon>
-          <FontAwesomeIcon icon={iconCode} className="icon" />
-        </Icon>
-      </Info>
-    </Wrapper>
+    <>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <Wrapper>
+          <Degree>
+            {Math.floor(data?.main?.temp)}
+            <span> &deg;</span>
+            <span>C</span>
+          </Degree>
+          <Info>
+            <Location>
+              {data?.name}
+              <span>{data?.sys?.country}</span>
+            </Location>
+            <Icon>
+              <FontAwesomeIcon
+                icon={iconFa[`${data?.weather[0]?.main}`]}
+                className="icon"
+              />
+            </Icon>
+          </Info>
+        </Wrapper>
+      )}
+    </>
   );
 }
 

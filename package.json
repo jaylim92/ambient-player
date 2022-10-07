@@ -14,6 +14,7 @@
     "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.2",
     "react-scripts": "5.0.1",
     "recoil": "^0.7.5",
     "styled-components": "^5.3.6",
@@ -21,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true SSL_CRT_FILE=/Users/jay/localhost.pem SSL_KEY_FILE=/Users/jay/localhost-key.pem react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

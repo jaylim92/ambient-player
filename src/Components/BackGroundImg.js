@@ -1,10 +1,11 @@
-import { weatherInfo } from "../atom";
-import bg from "../assets/humid-bg.png";
+import { imgUrlState, weatherInfo } from "../atom";
 import styled from "styled-components";
 import Weather from "./Weather";
 import DateView from "./DateView";
 import { Player } from "./Player";
-import useGeolocation from "../hooks/useGeolocation";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { useQuery } from "react-query";
+import { getBackgroundImg } from "../api";
 
 const BackImg = styled.section`
   display: flex;
@@ -15,7 +16,7 @@ const BackImg = styled.section`
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: ${(props) => `url(${bg})`};
+  background-image: ${(props) => `url(${props.backgrounImg})`};
 `;
 
 const Wrapper = styled.div`
@@ -39,20 +40,32 @@ const PlayerBox = styled.div`
   padding: 0 10%;
 `;
 
-function BackGroundImg(weatherInfo) {
-  const location = useGeolocation();
+function BackGroundImg() {
+  const weatherState = useRecoilValue(weatherInfo);
+  const [imgUrl, setImgUrl] = useRecoilState(imgUrlState);
+  const { isLoading, data } = useQuery(["unSplashImg", weatherState], () =>
+    getBackgroundImg(weatherState)
+  );
+  setImgUrl(data);
+
   return (
-    <BackImg>
-      <Wrapper>
-        <InfoBox>
-          <Weather props={location} />
-          <DateView />
-        </InfoBox>
-        <PlayerBox>
-          <Player />
-        </PlayerBox>
-      </Wrapper>
-    </BackImg>
+    <>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <BackImg backgrounImg={`${imgUrl?.results[0]?.urls?.regular}`}>
+          <Wrapper>
+            <InfoBox>
+              <Weather />
+              <DateView />
+            </InfoBox>
+            <PlayerBox>
+              <Player />
+            </PlayerBox>
+          </Wrapper>
+        </BackImg>
+      )}
+    </>
   );
 }
 
