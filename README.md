@@ -17,3 +17,11 @@
 2. Styled-componets
 3. react-query
 4. recoil
+
+---
+
+## 작업 진행
+
+- geolocation api를 이용하여 사용자의 위도와 경도 받아온다
+- openweathermap api를 이용하여 사용자 위치의 현재 날씨를 받아옴
+- unsplash api에 openweathermap에서 받은 날씨정보를 query로 전달하고 이미지 검색으로 받아온 이미지`url`을 `props`로 전달하여 적용
