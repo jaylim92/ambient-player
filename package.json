@@ -16,17 +16,16 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.2",
-    "react-scripts": "^5.0.1",
     "recoil": "^0.7.5",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "HTTPS=true SSL_CRT_FILE=/Users/jay/localhost.pem SSL_KEY_FILE=/Users/jay/localhost-key.pem react-scripts start ",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "test": "vite test",
+    "eject": "vite eject",
     "pre-deploy": "npm run build",
     "deploy": "gh-pages"
   },
@@ -48,5 +47,10 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://jaylim92.github.io/ambient-player/"
+  "homepage": "https://jaylim92.github.io/ambient-player/",
+  "devDependencies": {
+    "@types/styled-components": "^5.1.26",
+    "@vitejs/plugin-react": "^3.1.0",
+    "vite": "^4.1.3"
+  }
 }

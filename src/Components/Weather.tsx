@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faWater,
   faSun,
@@ -7,11 +7,9 @@ import {
   faCloudRain,
   faCloudBolt,
   faSnowflake,
-} from "@fortawesome/free-solid-svg-icons";
-import { useSetRecoilState } from "recoil";
-import { weatherInfo } from "../atom";
-import { useQuery } from "react-query";
-import { getWeatherData } from "../api";
+} from '@fortawesome/free-solid-svg-icons';
+import { useRecoilValue } from 'recoil';
+import { weatherInfo } from '../atom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -61,8 +59,7 @@ const Icon = styled.span`
 `;
 
 function Weather() {
-  const { isLoading, data } = useQuery("weather", getWeatherData);
-  const setWeatherState = useSetRecoilState(weatherInfo);
+  const data = useRecoilValue(weatherInfo);
   const iconFa = {
     Clear: faSun,
     Clouds: faCloud,
@@ -72,33 +69,28 @@ function Weather() {
     Mist: faWater,
     Haze: faWater,
   };
-  setWeatherState(data?.weather[0]?.main);
 
   return (
     <>
-      {isLoading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <Wrapper>
-          <Degree>
-            {Math.floor(data?.main?.temp)}
-            <span> &deg;</span>
-            <span>C</span>
-          </Degree>
-          <Info>
-            <Location>
-              {data?.name}
-              <span>{data?.sys?.country}</span>
-            </Location>
-            <Icon>
-              <FontAwesomeIcon
-                icon={iconFa[`${data?.weather[0]?.main}`]}
-                className="icon"
-              />
-            </Icon>
-          </Info>
-        </Wrapper>
-      )}
+      <Wrapper>
+        <Degree>
+          {Math.floor(Number(data?.main.temp) - 272)}
+          <span> &deg;</span>
+          <span>C</span>
+        </Degree>
+        <Info>
+          <Location>
+            {data?.name}
+            <span>{data?.sys?.country}</span>
+          </Location>
+          <Icon>
+            <FontAwesomeIcon
+              icon={iconFa[`${data?.weather[0]?.main}`]}
+              className="icon"
+            />
+          </Icon>
+        </Info>
+      </Wrapper>
     </>
   );
 }

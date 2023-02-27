@@ -1,11 +1,11 @@
-import { imgUrlState, weatherInfo } from "../atom";
-import styled from "styled-components";
-import Weather from "./Weather";
-import DateView from "./DateView";
-import { Player } from "./Player";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { useQuery } from "react-query";
-import { getBackgroundImg } from "../api";
+import { imgUrlState, weatherInfo } from '../atom';
+import styled from 'styled-components';
+import Weather from './Weather';
+import DateView from './DateView';
+import { Player } from './Player';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 const BackImg = styled.section`
   display: flex;
@@ -43,11 +43,18 @@ const PlayerBox = styled.div`
 function BackGroundImg() {
   const weatherState = useRecoilValue(weatherInfo);
   const [imgUrl, setImgUrl] = useRecoilState(imgUrlState);
-  const { isLoading, data } = useQuery(["unSplashImg", weatherState], () =>
-    getBackgroundImg(weatherState)
+  const { isLoading } = useQuery(
+    ['unSplashImg', weatherState?.weather[0].main],
+    async () => {
+      const ACCESS_KEY = 'RLpcHh1NwoBWBhBdjWj02AwpsccAlIAGM6LMXlL1IdI';
+      const weather = weatherState?.weather[0].main;
+      const baseUrl = 'https://api.unsplash.com/search/photos/?';
+      const response = await axios.get(
+        `${baseUrl}client_id=${ACCESS_KEY}&query=${weather}&orientation=portrait&page=1&per_page=1`
+      );
+      setImgUrl(response.data);
+    }
   );
-  setImgUrl(data);
-
   return (
     <>
       {isLoading ? (

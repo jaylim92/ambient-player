@@ -1,8 +1,8 @@
-import cloud from "../assets/music/cloud.mp3";
-import { useState, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faShuffle } from "@fortawesome/free-solid-svg-icons";
-import styled from "styled-components";
+import cloud from '../assets/music/cloud.mp3';
+import { useState, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause, faShuffle } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
 const PlayerControlBox = styled.section`
   display: flex;
